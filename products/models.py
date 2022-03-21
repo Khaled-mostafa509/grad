@@ -19,7 +19,7 @@ class Products(models.Model):
     def __str__(self):
         return self.Name
 class Category(models.Model):
-    name=models.CharField(max_length=25)
+    name=models.CharField(max_length=50)
     def __str__(self):
         return self.name
     
