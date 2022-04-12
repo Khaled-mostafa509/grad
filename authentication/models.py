@@ -9,6 +9,9 @@ from django.contrib.auth.hashers import make_password
 import jwt
 from django.conf import settings
 from datetime import datetime ,timedelta
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Create your models here.
 
@@ -21,9 +24,6 @@ class MyUserManager(UserManager):
             raise ValueError('The given email must be set')
         
         email = self.normalize_email(email)
-        # Lookup the real model class from the global app registry so this
-        # manager method can be used in migrations. This is fine because
-        # managers are by definition working on the real model
         GlobalUserModel = apps.get_model(self.model._meta.app_label, self.model._meta.object_name)
         username = GlobalUserModel.normalize_username(username)
         user = self.model(username=username, email=email, **extra_fields)
@@ -33,27 +33,27 @@ class MyUserManager(UserManager):
 
     def create_user(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_user', False)
-        extra_fields.setdefault('is_Company', False)
-        extra_fields.setdefault('is_Doctor', False)
+        extra_fields.setdefault('user', False)
+        extra_fields.setdefault('Company', False)
+        extra_fields.setdefault('Doctor', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(username, email, password, **extra_fields)
 
     def create_superuser(self, username, email,  password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_user', True)
-        extra_fields.setdefault('is_Company', True)
-        extra_fields.setdefault('is_Doctor', True)
+        extra_fields.setdefault('user', True)
+        extra_fields.setdefault('Company', True)
+        extra_fields.setdefault('Doctor', True)
         extra_fields.setdefault('is_superuser', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_user') is not True:
-            raise ValueError('Superuser must have is_user=True.')
-        if extra_fields.get('is_Company') is not True:
-            raise ValueError('Superuser must have is_Company=True.')
-        if extra_fields.get('is_Doctor') is not True:
-            raise ValueError('Superuser must have is_Doctor=True.')
+        if extra_fields.get('user') is not True:
+            raise ValueError('Superuser must have user=True.')
+        if extra_fields.get('Company') is not True:
+            raise ValueError('Superuser must have Company=True.')
+        if extra_fields.get('Doctor') is not True:
+            raise ValueError('Superuser must have Doctor=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
@@ -82,9 +82,9 @@ class User(AbstractBaseUser,PermissionsMixin,TrackingModel):
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
-    is_user =models.BooleanField(default=False)
-    is_Company = models.BooleanField(default=False)
-    is_Doctor =models.BooleanField(default=False)
+    user =models.BooleanField(default=False)
+    Company = models.BooleanField(default=False)
+    Doctor =models.BooleanField(default=False)
     # phone = models.CharField(_("phone number"), max_length=11)
     
     
@@ -102,3 +102,18 @@ class User(AbstractBaseUser,PermissionsMixin,TrackingModel):
     def token(self):
         token = jwd.encode({'username':self.username,'email':self.email },settings.SECRET_KEY,algorithm='HS256')
         return token
+
+class Profile(models.Model):
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField( max_length=15)
+    last_name = models.CharField( max_length=15)
+    phone_number = models.CharField( max_length=14)
+    image = models.ImageField( upload_to='profile/')
+    
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+# Create your models here.
+
+

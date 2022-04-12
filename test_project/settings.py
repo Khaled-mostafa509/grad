@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     'products',
     'helpers',
+    # 'recommended',
     # 'phonenumber_field',
 ]
 
@@ -87,6 +88,16 @@ WSGI_APPLICATION = 'test_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'd6qclb8qlneusj',
+#        'USER': 'gisyouirutkrjn',
+#        'PASSWORD': '413f7d63ee654e0f7ed6e6cd014061b47405fb752de9d116d03c6e7ac4bfbb9c',
+#        'HOST': 'ec2-54-204-28-187.compute-1.amazonaws.com',
+#        'PORT': '5432',
+#    }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
