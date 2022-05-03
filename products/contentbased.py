@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import psycopg2
+
 
 df_ahmed = pd.read_excel(r'E:\khaled\db\recommendation_system\ahmed.xlsx')
 df_yahia = pd.read_excel(r'E:\khaled\db\recommendation_system\yahia.xlsx')
