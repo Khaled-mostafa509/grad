@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     # 'rest_auth.registration',
     # 'rest_framework.authtoken',
     # 'knox',
-    'recommended',
     # 'phonenumber_field',
 ]
 
