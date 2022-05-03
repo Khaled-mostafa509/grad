@@ -6,7 +6,7 @@ from rest_framework import viewsets, permissions
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
-from authentications.models import User
+# from authentications.models import User
 
 @api_view(['GET','Post'])
 def Home_listAPI(request):
