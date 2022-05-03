@@ -33,9 +33,11 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-AUTH_USER_MODEL='authentication.User'
+AUTH_USER_MODEL='authentications.User'
 ACCOUNT_UNIQUE_EMAIL= True
-# Application definition
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_VERIFICATION = 'none'# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
