@@ -1,5 +1,4 @@
 from django.db import models
-from .contentbased import tst
 from home.models import Products
 
 # Create your models here.
