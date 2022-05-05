@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'rest_framework.authtoken',
     'knox',
-    'phonenumber_field',
+    # 'phonenumber_field',
 ]
 
 MIDDLEWARE = [
