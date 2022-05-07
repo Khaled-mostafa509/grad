@@ -48,16 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentications',
     'rest_framework',
-    # 'rest_framework.authtoken',
     'home',
     'helpers',
-    # 'rest_auth',
+    'rest_auth',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
     'rest_framework.authtoken',
-    # 'knox',
+    'knox',
     # 'phonenumber_field',
 ]
 

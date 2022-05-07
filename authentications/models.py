@@ -1,57 +1,31 @@
-# from django.db import models
-# from django.contrib.auth.models import AbstractUser
-# from django.conf import settings
-
-# class User(AbstractUser):
-    
-#   is_person = models.BooleanField(default=False)
-#   is_company = models.BooleanField(default=False)
-
-# class Person(models.Model):
-#     person = models.OneToOneField(
-#       settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-#     first_name = models.CharField( max_length=15)
-#     last_name = models.CharField( max_length=15)
-#     phone_number = models.CharField( max_length=14)
-#     image = models.ImageField( upload_to='profile/')
-
-#     def __str__(self):
-#         return self.person.username
-
-# class Company(models.Model):
-#     company = models.OneToOneField(
-#         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     company_name = models.CharField( max_length=15)
-#     phone_number = models.CharField( max_length=14)
-#     logo = models.ImageField( upload_to='profile/')
-
-#     def __str__(self):
-#         return self.company_name.username
-
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+import jwt
 
 class User(AbstractUser):
-  #Boolean fields to select the type of account.
-  is_seller = models.BooleanField(default=False)
-  is_buyer = models.BooleanField(default=False)
+    
+  is_person = models.BooleanField(default=False)
+  is_company = models.BooleanField(default=False)
 
-class Seller(models.Model):
-    seller = models.OneToOneField(
+class Person(models.Model):
+    person = models.OneToOneField(
       settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    area = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    description = models.TextField()
+    first_name = models.CharField( max_length=15)
+    last_name = models.CharField( max_length=15)
+    phone_number = models.CharField( max_length=14)
+    image = models.ImageField( upload_to='profile/')
 
     def __str__(self):
-        return self.seller.username
+        return self.person.username
 
-class Buyer(models.Model):
-    buyer = models.OneToOneField(
+class Company(models.Model):
+    company = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    country = models.CharField(max_length=100)
+    company_name = models.CharField( max_length=15)
+    phone_number = models.CharField( max_length=14)
+    logo = models.ImageField( upload_to='profile/')
 
     def __str__(self):
-        return self.buyer.username
+        return self.company_name.username
