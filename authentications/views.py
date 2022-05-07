@@ -1,16 +1,23 @@
 from django.shortcuts import render
-from rest_auth.registration.views import RegisterView
 from .serializers import PersonCustomRegistrationSerializer, CompanyCustomRegistrationSerializer 
-    
+from rest_framework.generics import GenericAPIView
 from django.contrib.auth import login
 
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 
-class PersonRegistrationView(RegisterView):
+# class PersonRegistrationView(RegisterView):
+#     serializer_class = PersonCustomRegistrationSerializer
+class PersonRegistrationView(GenericAPIView):
     serializer_class = PersonCustomRegistrationSerializer
     
+    def post(self,request):
+        serializer =self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data,status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)   
 
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
@@ -22,5 +29,14 @@ class LoginAPI(KnoxLoginView):
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
 
-class CompanyRegistrationView(RegisterView):
+# class CompanyRegistrationView(RegisterView):
+#     serializer_class = CompanyCustomRegistrationSerializer
+class CompanyRegistrationView(GenericAPIView):
     serializer_class = CompanyCustomRegistrationSerializer
+    
+    def post(self,request):
+        serializer =self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data,status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
