@@ -27,7 +27,7 @@ class PersonRegistrationView(GenericAPIView):
 #         user = serializer.validated_data['user']
 #         login(request, user)
 #         return super(LoginAPI, self).post(request, format=None)
-class LoginAPIView(GenericAPIView):
+class LoginAPI(GenericAPIView):
     serializer_class = LoginSerializers
     def post(self,request):
         email=request.data.get('email',None)
