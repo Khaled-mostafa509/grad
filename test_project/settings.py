@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     'home',
     'helpers',
-    'rest_auth',
+    # 'rest_auth',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

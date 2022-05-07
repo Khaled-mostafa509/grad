@@ -1,12 +1,12 @@
 from django.db import models
 from rest_framework import serializers ,permissions
-from rest_auth.registration.serializers import RegisterSerializer 
+# from rest_auth.registration.serializers import RegisterSerializer 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate , login
 from .models import Person,Company
 from knox.views import LoginView as KnoxLoginView
 
-class PersonCustomRegistrationSerializer(RegisterSerializer):
+class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     person = serializers.PrimaryKeyRelatedField(read_only=True,)
     first_name = models.CharField( )
     last_name = models.CharField( )
@@ -58,7 +58,7 @@ class PersonCustomRegistrationSerializer(RegisterSerializer):
 
 
 
-class CompanyCustomRegistrationSerializer(RegisterSerializer):
+class CompanyCustomRegistrationSerializer(serializers.ModelSerializer):
     company = serializers.PrimaryKeyRelatedField(read_only=True,)
     company_name = serializers.CharField()
     phone_number = serializers.CharField()
