@@ -48,15 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentications',
     'rest_framework',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'home',
     'helpers',
+    # 'rest_framework.authentications',
     'rest_auth',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-    'rest_framework.authtoken',
     'knox',
     # 'phonenumber_field',
 ]
@@ -116,6 +116,13 @@ import dj_database_url
 dj_heroku = dj_database_url.config(conn_max_age=600)
 
 DATABASES['default'].update(dj_heroku) 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

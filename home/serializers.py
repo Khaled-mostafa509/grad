@@ -13,12 +13,6 @@ class RecommendedSerializers(serializers.ModelSerializer):
         fields = ['id','product','recomended_devices']
 
         
-# class Order_ItemSerializers(serializers.ModelSerializer):
-#     user_name = serializers.CharField(source='user.username')
-#     item_name = serializers.CharField(source='item.Name')
-#     class Meta:
-#         model = OrderItem
-#         fields = ['id','ordered','quantity','user_name','item_name']
 class  jsonOrderItem(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
