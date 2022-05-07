@@ -33,11 +33,11 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-AUTH_USER_MODEL='authentications.User'
-ACCOUNT_UNIQUE_EMAIL= True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_VERIFICATION = 'none'# Application definition
+# AUTH_USER_MODEL='authentications.User'
+# ACCOUNT_UNIQUE_EMAIL= True
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -52,11 +52,11 @@ INSTALLED_APPS = [
     'home',
     'helpers',
     # 'rest_framework.authentications',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_auth.registration',
-    'knox',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'rest_auth.registration',
+    # 'knox',
     # 'phonenumber_field',
 ]
 
@@ -116,11 +116,11 @@ dj_heroku = dj_database_url.config(conn_max_age=600)
 
 DATABASES['default'].update(dj_heroku) 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES' : [
+#         'rest_framework.authentication.TokenAuthentication',
+#     ]
+# }
 
 
 # Password validation
