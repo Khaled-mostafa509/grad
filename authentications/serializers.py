@@ -4,7 +4,6 @@ from rest_framework import serializers ,permissions
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate , login
 from .models import Person,Company
-from knox.views import LoginView as KnoxLoginView
 
 class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     person = serializers.PrimaryKeyRelatedField(read_only=True,)
@@ -36,6 +35,13 @@ class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
         person.save()
         return user
 
+class LoginSerializers(serializers.ModelSerializer):
+    password = serializers.CharField(max_length=128, min_length=6 , write_only=True) 
+    class Meta:
+        
+        model= User
+        fields = ('email','password','token')
+        read_only_fields = ['token']
 # class loginSerializer(KnoxLoginView):
 #     permissions_classes = (permissions.AllowAny,)
     

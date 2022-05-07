@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_auth.registration',
     'rest_framework.authtoken',
-    'knox',
+    # 'knox',
     # 'phonenumber_field',
 ]
 
