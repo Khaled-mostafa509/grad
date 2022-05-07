@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'home',
     'helpers',
     # 'rest_framework.authentications',
-    'rest_auth',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
