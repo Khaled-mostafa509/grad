@@ -3,7 +3,7 @@ from rest_framework import serializers ,permissions
 # from rest_auth.registration.serializers import RegisterSerializer 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate , login
-from .models import Person,Company
+from .models import Person,Company,User
 
 class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
     person = serializers.PrimaryKeyRelatedField(read_only=True,)
