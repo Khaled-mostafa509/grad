@@ -1,5 +1,6 @@
 from django.urls import path
 # from .views import PersonRegistrationView,CompanyRegistrationView,LoginAPI
+from .views import LoginAPI
 
 app_name = 'authentications'
 
