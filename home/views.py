@@ -6,15 +6,8 @@ from rest_framework import viewsets, permissions
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
-# from authentications.models import User
 
 
-
-# @api_view(['Post','GET'])
-# def Home_listAPI(request):
-#     all_ads=Products.objects.all()
-#     permission_classes = [permissions.IsAdminUser]
-#     return Response(HomeSerializers(all_ads,many=True).data)
 
 
 @api_view(['GET','Post'])
