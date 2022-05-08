@@ -18,7 +18,6 @@ class Person(models.Model):
     # person = models.OneToOneField(
     #   settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     auth_user_id = models.OneToOneField("User", on_delete=models.CASCADE)
-    user=User
     first_name = models.CharField( max_length=15)
     last_name = models.CharField( max_length=15)
     phone_number = models.CharField( max_length=14)
