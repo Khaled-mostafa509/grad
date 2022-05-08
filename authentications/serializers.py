@@ -5,37 +5,14 @@ from django.contrib.auth import authenticate , login
 from .models import Person,Company,User
 
 class PersonCustomRegistrationSerializer(serializers.ModelSerializer):
-        person = serializers.PrimaryKeyRelatedField(read_only=True,)
-        first_name = models.CharField( )
-        last_name = models.CharField( )
-        phone_number = models.CharField()
-        image = models.ImageField( )
+        password = serializers.CharField(max_length=128, min_length=6 , write_only=True) 
+        
         class Meta:
                 model= Person
                 fields = '__all__'
-        
-        def get_cleaned_data(self):
-            data = super(PersonCustomRegistrationSerializer, self).get_cleaned_data()
-            extra_data = {
-                'first_name' : self.validated_data.get('first_name', ''),
-                'last_name' : self.validated_data.get('last_name', ''),
-                'phone_number': self.validated_data.get('phone_number', ''),
-                'image': self.validated_data.get('image', ''),
-            }
-            data.update(extra_data)
-            return data
-        def save(self, request):
-                
-                user = super(PersonCustomRegistrationSerializer, self).save(request)
-                user.is_person = True
-                user.save()
-                person = Person(person=user, first_name=self.cleaned_data.get('first_name'), 
-                        last_name=self.cleaned_data.get('last_name'),
-                        phone_number=self.cleaned_data.get('phone_number'),
-                        image=self.cleaned_data.get('image'))
-                person.save()
-                return user
     
+        def create(self, validated_data):
+                return User.objects.create_user(**validated_data)
 #     person = serializers.PrimaryKeyRelatedField(read_only=True,)
 #     first_name = models.CharField( )
 #     last_name = models.CharField( )
