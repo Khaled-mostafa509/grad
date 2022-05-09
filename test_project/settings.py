@@ -30,14 +30,14 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-AUTH_USER_MODEL='authentications.User'
-ACCOUNT_UNIQUE_EMAIL= True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_VERIFICATION = 'none'# Application definition
+# AUTH_USER_MODEL='authentications.User'
+# ACCOUNT_UNIQUE_EMAIL= True
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,17 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentications',
+    # 'authentications',
     'rest_framework',
     # 'rest_framework.authtoken',
     'home',
     'helpers',
     # 'rest_auth',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_auth.registration',
-    'rest_framework.authtoken',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'rest_auth.registration',
+    # 'rest_framework.authtoken',
     # 'knox',
     # 'phonenumber_field',
 ]
