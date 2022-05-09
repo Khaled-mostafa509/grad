@@ -14,7 +14,7 @@ class Products(models.Model):
     Category=models.CharField(max_length=25)
     price = models.CharField(max_length=10,null= True)
     Production_country = models.CharField( max_length=50)
-    image = models.ImageField( upload_to='product_image/',null= True)
+    image = models.ImageField( null= True)
 
     
     
