@@ -13,11 +13,12 @@ rrr.register('', views.order)
 r = routers.DefaultRouter()
 r.register('', views.product)
 urlpatterns = [
-    
-    path('Recommended/',views.Recommended_listAPI,name='Recommended'),
-    path('', include(r.urls)),
     path('itemorder/', include(rr.urls)),
     path('order/', include(rrr.urls)),
+    path('Recommended/',views.Recommended_listAPI,name='Recommended'),
+    path('', include(r.urls)),
+    
+    
     
 
 ]
