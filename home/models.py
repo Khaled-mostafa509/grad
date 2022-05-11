@@ -32,15 +32,11 @@ class Recommended(models.Model):
        
 
 class OrderItem(models.Model):
-    # user = models.ForeignKey(User ,on_delete=models.CASCADE)
     item = models.ForeignKey(Products, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(default = 1)
 
     def __str__(self):
         return f"{self.quantity} of {self.item.Name}"
-
-    # def get_total_item_price(self):
-    #     return self.quantity * self.item.price
     
 class Order(models.Model):
     # user = models.ForeignKey(User,on_delete=models.CASCADE)

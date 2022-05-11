@@ -14,11 +14,13 @@ class RecommendedSerializers(serializers.ModelSerializer):
 
         
 class  jsonOrderItem(serializers.ModelSerializer):
+    item= serializers.CharField(source='item.Name')
     class Meta:
         model = OrderItem
         fields = "__all__"
         
 class  jsonOrder(serializers.ModelSerializer):
+    # items= serializers.CharField(source=f"{OrderItem.quantity} of {OrderItem.item}")
     class Meta:
         model = Order
         fields = "__all__"      
