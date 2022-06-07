@@ -15,14 +15,18 @@ class Products(models.Model):
     price = models.CharField(max_length=10,null= True)
     Production_country = models.CharField( max_length=50)
     image = models.ImageField( null= True)
-
-    
-    
     
     
     def __str__(self):
         return self.Name
+
+class Category(models.Model):
+    Name = models.CharField(max_length=25)
+    category_products = models.ManyToManyField("Products",related_name="categories")
     
+    def __str__(self):
+        return self.Name 
+   
 class Recommended(models.Model):
     product_name = models.ForeignKey("Products", on_delete=models.CASCADE) 
     recomended_devices = models.ManyToManyField("Products",related_name="aa") 

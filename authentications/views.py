@@ -1,48 +1,66 @@
-from django.shortcuts import render
-from .serializers import PersonCustomRegistrationSerializer, CompanyCustomRegistrationSerializer ,LoginSerializers
-from rest_framework.generics import GenericAPIView
-from django.contrib.auth import login
-from .models import Company,Person
-from rest_framework import permissions,viewsets
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from django.http import request
+from rest_framework import generics, permissions, status
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from .serializers import CompanyCustomRegistrationSerializer, PersonCustomRegistrationSerializer, UserSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.views import APIView
+from .models import Person,Company,User
+from .permissions import IsCompanyUser, IsPersonUser
 
-# class PersonRegistrationView(RegisterView):
-#     serializer_class = PersonCustomRegistrationSerializer
+class CompanySignupView(generics.GenericAPIView):
+    serializer_class=CompanyCustomRegistrationSerializer
 
-    
-    # def post(self,request):
-    #     serializer =self.serializer_class(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return response.Response(serializer.data,status=status.HTTP_201_CREATED)
-    #     return response.Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)   
+    def post(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user=serializer.save()
+        return Response({
+            "user":UserSerializer(user, context=self.get_serializer_context()).data,
+            "message":"account created successfully"
+        })
 
 
-class LoginAPI(GenericAPIView):
-    serializer_class = LoginSerializers
-    def post(self,request):
-        email=request.data.get('email',None)
-        password=request.data.get('password',None)
-        user =authenticate(username=email,password=password)
-        if user:
-            serializer = self.serializer_class(user)
-            return response.Response(serializer.data,status=status.HTTP_200_OK)
-        return response.Response({'message':"Invalid credentialsn try again"},status=status.HTTP_401_UNAUTHORIZED)
+class PersonSignupView(generics.GenericAPIView):
+    serializer_class=PersonCustomRegistrationSerializer
+    def post(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user=serializer.save()
+        return Response({
+            "user":UserSerializer(user, context=self.get_serializer_context()).data,
+            "message":"account created successfully"
+        })
 
-# class CompanyRegistrationView(RegisterView):
-#     serializer_class = CompanyCustomRegistrationSerializer
-# class CompanyRegistrationView(GenericAPIView):
-#     serializer_class = CompanyCustomRegistrationSerializer
-class CompanyRegistrationView(viewsets.ModelViewSet):
-    queryset = Company.objects.all()
-    serializer_class = CompanyCustomRegistrationSerializer  
-    
-class PersonRegistrationView(viewsets.ModelViewSet):
-    queryset = Person.objects.all()
-    serializer_class = PersonCustomRegistrationSerializer 
-    # def post(self,request):
-    #     serializer =self.serializer_class(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return response.Response(serializer.data,status=status.HTTP_201_CREATED)
-    #     return response.Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer=self.serializer_class(data=request.data, context={'request':request})
+        serializer.is_valid(raise_exception=True)
+        user=serializer.validated_data['user']
+        token, created=Token.objects.get_or_create(user=user)
+        return Response({
+            'token':token.key,
+            'user_id':user.pk,
+            'is_person':user.is_person
+        })
+
+
+class LogoutView(APIView):
+    def post(self, request, format=None):
+        request.auth.delete()
+        return Response(status=status.HTTP_200_OK)
+
+
+class PersonOnlyView(generics.RetrieveAPIView):
+    permission_classes=[permissions.IsAuthenticated&IsPersonUser]
+    serializer_class=UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+class CompanyOnlyView(generics.RetrieveAPIView):
+    permission_classes=[permissions.IsAuthenticated&IsCompanyUser]
+    serializer_class=UserSerializer
+
+    def get_object(self):
+        return self.request.user

@@ -1,5 +1,5 @@
-from .models import Products ,OrderItem , Order ,Recommended
-from .serializers import HomeSerializers  ,RecommendedSerializers ,jsonOrder,jsonOrderItem
+from .models import Products ,Category,OrderItem , Order ,Recommended
+from .serializers import HomeSerializers,CategorySerializers  ,RecommendedSerializers ,jsonOrder,jsonOrderItem
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets, permissions
@@ -26,7 +26,14 @@ def Recommended_listAPI(request):
 class product(viewsets.ModelViewSet):
     queryset = Products.objects.all()
     serializer_class = HomeSerializers
+    
 
+@api_view(['GET','Post'])
+def Category_listAPI(request):
+    all_ads=Category.objects.all()
+    # permission_classes = [permissions.IsAdminUser]
+    return Response(CategorySerializers(all_ads,many=True).data)
+    
 class orderitem(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = jsonOrderItem

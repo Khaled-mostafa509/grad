@@ -8,23 +8,20 @@ class User(AbstractUser):
   is_company = models.BooleanField(default=False)
 
 class Person(models.Model):
-    # person = models.OneToOneField(
-    #   settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    user=User
-    first_name = models.CharField( max_length=15)
-    last_name = models.CharField( max_length=15)
-    phone_number = models.CharField( max_length=14)
-    image = models.ImageField( upload_to='profile/')
+    user = models.OneToOneField(
+      settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    phone_number = models.CharField(max_length=11)
+    address = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.person.username
+        return str(self.user)
 
 class Company(models.Model):
-    company = models.OneToOneField(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    company_name = models.CharField( max_length=15)
-    phone_number = models.CharField( max_length=14)
-    logo = models.ImageField( upload_to='profile/')
+    phone_number = models.CharField(max_length=11)
+    tax_number = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.company_name.username
+        return str(self.user)
